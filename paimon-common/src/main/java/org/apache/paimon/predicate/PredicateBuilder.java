@@ -81,6 +81,10 @@ public class PredicateBuilder {
         return leaf(Equal.INSTANCE, transform, literal);
     }
 
+    public Predicate equalNullSafe(Transform transform, Object literal) {
+        return leaf(EqualNullSafe.INSTANCE, transform, literal);
+    }
+
     public Predicate notEqual(int idx, Object literal) {
         return leaf(NotEqual.INSTANCE, idx, literal);
     }

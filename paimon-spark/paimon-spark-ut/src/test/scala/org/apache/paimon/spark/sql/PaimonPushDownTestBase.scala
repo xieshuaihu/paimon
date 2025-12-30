@@ -36,6 +36,16 @@ abstract class PaimonPushDownTestBase extends PaimonSparkTestBase {
 
   import testImplicits._
 
+  test(s"Paimon push down: apply !(col1 <=> value)") {
+    spark.sql(s"""
+                 |CREATE TABLE T (a INT, b INT)
+                 |""".stripMargin)
+
+    spark.sql("INSERT INTO T VALUES (1, null)")
+
+    checkAnswer(spark.sql("SELECT a, b FROM T WHERE !(b<=>1)"), Row(1, null) :: Nil)
+  }
+
   test(s"Paimon push down: apply partition filter push down with non-partitioned table") {
     spark.sql(s"""
                  |CREATE TABLE T (id INT, name STRING, pt STRING)

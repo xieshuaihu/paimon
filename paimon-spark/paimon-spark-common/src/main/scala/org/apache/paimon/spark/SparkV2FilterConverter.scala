@@ -62,7 +62,7 @@ case class SparkV2FilterConverter(rowType: RowType) extends Logging {
             if (literal == null) {
               builder.isNull(transform)
             } else {
-              builder.equal(transform, literal)
+              builder.equalNullSafe(transform, literal)
             }
           case _ =>
             throw new UnsupportedOperationException(s"Convert $sparkPredicate is unsupported.")
